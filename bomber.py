@@ -325,7 +325,6 @@ def selectnode(mode="sms"):
                 delay = float(input(
                     mesgdcrt.CommandMessage("Enter delay time (in seconds): "))
                     .strip())
-                # delay = 0
                 max_thread_limit = (count//10) if (count//10) > 0 else 1
                 max_threads = int(input(
                     mesgdcrt.CommandMessage(
