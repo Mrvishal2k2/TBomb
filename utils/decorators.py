@@ -42,21 +42,25 @@ class MessageDecorator(object):
             self.STDS = STAT.STDS
 
     def SuccessMessage(self, RequestMessage):
-        print(self.PASS + " " + Style.RESET_ALL + RequestMessage)
+        print(f"{self.PASS} {Style.RESET_ALL}{RequestMessage}")
 
     def FailureMessage(self, RequestMessage):
-        print(self.FAIL + " " + Style.RESET_ALL + RequestMessage)
+        print(f"{self.FAIL} {Style.RESET_ALL}{RequestMessage}")
 
     def WarningMessage(self, RequestMessage):
-        print(self.WARN + " " + Style.RESET_ALL + RequestMessage)
+        print(f"{self.WARN} {Style.RESET_ALL}{RequestMessage}")
 
     def SectionMessage(self, RequestMessage):
-        print(self.HEAD + " " + Fore.CYAN + Style.BRIGHT
-              + RequestMessage + Style.RESET_ALL)
+        print(
+            (
+                (f"{self.HEAD} {Fore.CYAN}{Style.BRIGHT}" + RequestMessage)
+                + Style.RESET_ALL
+            )
+        )
 
     def CommandMessage(self, RequestMessage):
-        return self.CMDL + " " + Style.RESET_ALL + RequestMessage
+        return f"{self.CMDL} {Style.RESET_ALL}{RequestMessage}"
 
     def GeneralMessage(self, RequestMessage):
-        print(self.STDS + " " + Style.RESET_ALL + RequestMessage)
+        print(f"{self.STDS} {Style.RESET_ALL}{RequestMessage}")
 

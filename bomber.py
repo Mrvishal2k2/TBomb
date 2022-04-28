@@ -64,7 +64,7 @@ def bann_text():
                                          """
     if ASCII_MODE:
         logo = ""
-    version = "Version: "+__VERSION__
+    version = f"Version: {__VERSION__}"
     contributors = "Contributors: "+" ".join(__CONTRIBUTORS__)
     print(random.choice(ALL_COLORS) + logo + RESET_ALL)
     mesgdcrt.SuccessMessage(version)
@@ -94,7 +94,7 @@ def do_zip_update():
     else:
         zip_url = "https://github.com/TheSpeedX/TBomb/archive/master.zip"
         dir_name = "TBomb-master"
-    print(ALL_COLORS[0]+"Downloading ZIP ... "+RESET_ALL)
+    print(f"{ALL_COLORS[0]}Downloading ZIP ... {RESET_ALL}")
     response = requests.get(zip_url)
     if response.status_code == 200:
         zip_content = response.content
@@ -129,13 +129,13 @@ def do_zip_update():
 def do_git_update():
     success = False
     try:
-        print(ALL_COLORS[0]+"UPDATING "+RESET_ALL, end='')
+        print(f"{ALL_COLORS[0]}UPDATING {RESET_ALL}", end='')
         process = subprocess.Popen("git checkout . && git pull ",
                                    shell=True,
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.STDOUT)
         while process:
-            print(ALL_COLORS[0]+'.'+RESET_ALL, end='')
+            print(f'{ALL_COLORS[0]}.{RESET_ALL}', end='')
             time.sleep(1)
             returncode = process.poll()
             if returncode is not None:
@@ -192,7 +192,7 @@ def notifyen():
             url = "https://github.com/TheSpeedX/TBomb/raw/master/.notify"
         noti = requests.get(url).text.upper()
         if len(noti) > 10:
-            mesgdcrt.SectionMessage("NOTIFICATION: " + noti)
+            mesgdcrt.SectionMessage(f"NOTIFICATION: {noti}")
             print()
     except Exception:
         pass
@@ -209,8 +209,7 @@ def get_phone_info():
                 "The country code ({cc}) that you have entered"
                 " is invalid or unsupported".format(cc=cc))
             continue
-        target = input(mesgdcrt.CommandMessage(
-            "Enter the target number: +" + cc + " "))
+        target = input(mesgdcrt.CommandMessage(f"Enter the target number: +{cc} "))
         target = format_phone(target)
         if ((len(target) <= 6) or (len(target) >= 12)):
             mesgdcrt.WarningMessage(
@@ -237,10 +236,10 @@ def pretty_print(cc, target, success, failed):
     mesgdcrt.SectionMessage("Bombing is in progress - Please be patient")
     mesgdcrt.GeneralMessage(
         "Please stay connected to the internet during bombing")
-    mesgdcrt.GeneralMessage("Target       : " + cc + " " + target)
-    mesgdcrt.GeneralMessage("Sent         : " + str(requested))
-    mesgdcrt.GeneralMessage("Successful   : " + str(success))
-    mesgdcrt.GeneralMessage("Failed       : " + str(failed))
+    mesgdcrt.GeneralMessage(f"Target       : {cc} {target}")
+    mesgdcrt.GeneralMessage(f"Sent         : {str(requested)}")
+    mesgdcrt.GeneralMessage(f"Successful   : {str(success)}")
+    mesgdcrt.GeneralMessage(f"Failed       : {str(failed)}")
     mesgdcrt.WarningMessage(
         "This tool was made for fun and research purposes only")
     mesgdcrt.SuccessMessage("TBomb was created by SpeedX")
@@ -253,12 +252,11 @@ def workernode(mode, cc, target, count, delay, max_threads):
     mesgdcrt.SectionMessage("Gearing up the Bomber - Please be patient")
     mesgdcrt.GeneralMessage(
         "Please stay connected to the internet during bombing")
-    mesgdcrt.GeneralMessage("API Version   : " + api.api_version)
-    mesgdcrt.GeneralMessage("Target        : " + cc + target)
-    mesgdcrt.GeneralMessage("Amount        : " + str(count))
-    mesgdcrt.GeneralMessage("Threads       : " + str(max_threads) + " threads")
-    mesgdcrt.GeneralMessage("Delay         : " + str(delay) +
-                            " seconds")
+    mesgdcrt.GeneralMessage(f"API Version   : {api.api_version}")
+    mesgdcrt.GeneralMessage(f"Target        : {cc}{target}")
+    mesgdcrt.GeneralMessage(f"Amount        : {str(count)}")
+    mesgdcrt.GeneralMessage(f"Threads       : {str(max_threads)} threads")
+    mesgdcrt.GeneralMessage((f"Delay         : {str(delay)}" + " seconds"))
     mesgdcrt.WarningMessage(
         "This tool was made for fun and research purposes only")
     print()
@@ -275,10 +273,7 @@ def workernode(mode, cc, target, count, delay, max_threads):
     success, failed = 0, 0
     while success < count:
         with ThreadPoolExecutor(max_workers=max_threads) as executor:
-            jobs = []
-            for i in range(count-success):
-                jobs.append(executor.submit(api.hit))
-
+            jobs = [executor.submit(api.hit) for _ in range(count-success)]
             for job in as_completed(jobs):
                 result = job.result()
                 if result is None:
@@ -315,7 +310,7 @@ def selectnode(mode="sms"):
         if mode in ["sms", "call"]:
             cc, target = get_phone_info()
             if cc != "91":
-                max_limit.update({"sms": 100})
+                max_limit["sms"] = 100
         elif mode == "mail":
             target = get_mail_info()
         else:
@@ -328,9 +323,13 @@ def selectnode(mode="sms"):
                            " to send (Max {limit}): ".format(limit=limit))
                 count = int(input(mesgdcrt.CommandMessage(message)).strip())
                 if count > limit or count == 0:
-                    mesgdcrt.WarningMessage("You have requested " + str(count)
-                                            + " {type}".format(
-                                                type=mode.upper()))
+                    mesgdcrt.WarningMessage(
+                        (
+                            f"You have requested {count}"
+                            + " {type}".format(type=mode.upper())
+                        )
+                    )
+
                     mesgdcrt.GeneralMessage(
                         "Automatically capping the value"
                         " to {limit}".format(limit=limit))
