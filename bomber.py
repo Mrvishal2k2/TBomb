@@ -322,18 +322,6 @@ def selectnode(mode="sms"):
                 message = ("Enter number of {type}".format(type=mode.upper()) +
                            " to send (Max {limit}): ".format(limit=limit))
                 count = int(input(mesgdcrt.CommandMessage(message)).strip())
-                if count > limit or count == 0:
-                    mesgdcrt.WarningMessage(
-                        (
-                            f"You have requested {count}"
-                            + " {type}".format(type=mode.upper())
-                        )
-                    )
-
-                    mesgdcrt.GeneralMessage(
-                        "Automatically capping the value"
-                        " to {limit}".format(limit=limit))
-                    count = limit
                 delay = float(input(
                     mesgdcrt.CommandMessage("Enter delay time (in seconds): "))
                     .strip())
