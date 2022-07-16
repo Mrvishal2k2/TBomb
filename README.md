@@ -211,11 +211,11 @@ The package `toilet` cannot be installed yet on macOS. But TBomb does still work
 
 **A:** First, make sure `python3` and `pip3` are installed.
 
-- The Easy Method:  
-   `pip3 install tbomb`  
+- The Easy Method:
+   `pip3 install tbomb`
    Then execute by simply running `tbomb`
-- The Git Method:  
-   Clone the repo and Switch to the TBomb Directory and execute this command:  
+- The Git Method:
+   Clone the repo and Switch to the TBomb Directory and execute this command:
    `pip3 install -r requirements.txt`
 
 ##
@@ -252,8 +252,8 @@ The package `toilet` cannot be installed yet on macOS. But TBomb does still work
 
 ### Support
 
-For Queries: [Telegram Group](https://t.me/TBombChat)  
-Contributions, issues, and feature requests are welcome!  
+For Queries: [Telegram Group](https://t.me/TBombChat)
+Contributions, issues, and feature requests are welcome!
 Give a ★ if you like this project!
 
 <p align="right"> Last FAQ Update: 08.08.2021 </p>
