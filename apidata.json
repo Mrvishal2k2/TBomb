@@ -1,9 +1,5 @@
 {
-  "contributors": [
-    "TheSpeedX",
-    "Avinash",
-    "Reiltar"
-  ],
+  "contributors": ["TheSpeedX", "Avinash", "Reiltar"],
   "version": "2.3.5",
   "sms": {
     "977": [
